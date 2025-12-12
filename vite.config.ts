@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [react(), mode === "development" && componentTagger()].filter(
     Boolean
   ),
-  base: "/santa-s-stellar-awards/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
