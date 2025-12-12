@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
 
 @layer base {
   :root {
@@ -42,11 +42,23 @@
     --christmas-gold: 43 90% 55%;
     --christmas-cream: 40 33% 95%;
     --christmas-dark: 0 0% 8%;
-    
+
     /* Gradients */
-    --gradient-festive: linear-gradient(135deg, hsl(0 72% 51%) 0%, hsl(0 72% 40%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(43 90% 55%) 0%, hsl(35 85% 45%) 100%);
-    --gradient-snow: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(210 20% 15%) 100%);
+    --gradient-festive: linear-gradient(
+      135deg,
+      hsl(0 72% 51%) 0%,
+      hsl(0 72% 40%) 100%
+    );
+    --gradient-gold: linear-gradient(
+      135deg,
+      hsl(43 90% 55%) 0%,
+      hsl(35 85% 45%) 100%
+    );
+    --gradient-snow: linear-gradient(
+      180deg,
+      hsl(0 0% 8%) 0%,
+      hsl(210 20% 15%) 100%
+    );
 
     /* Shadows */
     --shadow-glow: 0 0 30px hsl(0 72% 51% / 0.3);
@@ -74,7 +86,12 @@
     min-height: 100vh;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
 }
@@ -92,7 +109,8 @@
 }
 
 @keyframes twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
@@ -103,7 +121,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -121,7 +140,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px hsl(var(--christmas-gold) / 0.4);
   }
   50% {

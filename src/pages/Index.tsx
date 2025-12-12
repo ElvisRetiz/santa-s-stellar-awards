@@ -8,17 +8,22 @@ import CategoriesSection from "@/components/CategoriesSection";
 import VoterSelection from "@/components/VoterSelection";
 import VotingSection from "@/components/VotingSection";
 import ResultsSection from "@/components/ResultsSection";
+import CameraCapture from "@/components/CameraCapture";
 import { toast } from "@/hooks/use-toast";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type Phase = "setup" | "voting" | "results";
 
 const Index = () => {
-  const [phase, setPhase] = useState<Phase>("setup");
-  const [participants, setParticipants] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [phase, setPhase] = useLocalStorage<Phase>("christmas-awards-phase", "setup");
+  const [participants, setParticipants] = useLocalStorage<string[]>("christmas-awards-participants", []);
+  const [categories, setCategories] = useLocalStorage<string[]>("christmas-awards-categories", []);
   const [currentVoter, setCurrentVoter] = useState<string | null>(null);
-  const [votes, setVotes] = useState<Record<string, Record<string, string>>>({});
-  const [votedParticipants, setVotedParticipants] = useState<string[]>([]);
+  const [votes, setVotes] = useLocalStorage<Record<string, Record<string, string>>>("christmas-awards-votes", {});
+  const [votedParticipants, setVotedParticipants] = useLocalStorage<string[]>("christmas-awards-voted", []);
+  const [participantPhotos, setParticipantPhotos] = useLocalStorage<Record<string, string>>("christmas-awards-photos", {});
+  const [showCamera, setShowCamera] = useState(false);
+  const [pendingVoter, setPendingVoter] = useState<string | null>(null);
 
   const allHaveVoted = participants.length > 0 && votedParticipants.length === participants.length;
 
@@ -36,7 +41,31 @@ const Index = () => {
   };
 
   const selectVoter = (voter: string) => {
-    setCurrentVoter(voter);
+    // Check if voter already has a photo
+    if (participantPhotos[voter]) {
+      setCurrentVoter(voter);
+    } else {
+      // Show camera to capture photo
+      setPendingVoter(voter);
+      setShowCamera(true);
+    }
+  };
+
+  const handlePhotoTaken = (photoData: string) => {
+    if (pendingVoter) {
+      setParticipantPhotos({ ...participantPhotos, [pendingVoter]: photoData });
+      setCurrentVoter(pendingVoter);
+      setPendingVoter(null);
+      setShowCamera(false);
+    }
+  };
+
+  const handleSkipPhoto = () => {
+    if (pendingVoter) {
+      setCurrentVoter(pendingVoter);
+      setPendingVoter(null);
+      setShowCamera(false);
+    }
   };
 
   const completeVoting = () => {
@@ -69,13 +98,28 @@ const Index = () => {
     setCurrentVoter(null);
     setVotes({});
     setVotedParticipants([]);
+    setParticipantPhotos({});
+    localStorage.removeItem("christmas-awards-phase");
+    localStorage.removeItem("christmas-awards-participants");
+    localStorage.removeItem("christmas-awards-categories");
+    localStorage.removeItem("christmas-awards-votes");
+    localStorage.removeItem("christmas-awards-voted");
+    localStorage.removeItem("christmas-awards-photos");
     toast({ title: "¡Empezando de nuevo! 🎄" });
   };
 
   return (
     <div className="relative min-h-screen">
       <Snowfall />
-      
+
+      {showCamera && pendingVoter && (
+        <CameraCapture
+          voterName={pendingVoter}
+          onPhotoTaken={handlePhotoTaken}
+          onSkip={handleSkipPhoto}
+        />
+      )}
+
       <div className="relative z-10 container max-w-4xl mx-auto px-4 py-8">
         <ChristmasHeader />
 
@@ -148,6 +192,7 @@ const Index = () => {
               categories={categories}
               votes={votes}
               participants={participants}
+              participantPhotos={participantPhotos}
             />
 
             <div className="flex justify-center pt-6">
