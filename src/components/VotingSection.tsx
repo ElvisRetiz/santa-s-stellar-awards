@@ -33,7 +33,7 @@ const VotingSection = ({
         [currentCategory]: candidate,
       },
     }));
-    toast({ title: `Vote cast for ${candidate}! 🎄` });
+    toast({ title: `¡Voto emitido para ${candidate}! 🎄` });
   };
 
   const goToNext = () => {
@@ -52,7 +52,7 @@ const VotingSection = ({
 
   const handleFinish = () => {
     if (!isComplete) {
-      toast({ title: "Please vote in all categories", variant: "destructive" });
+      toast({ title: "Por favor vota en todas las categorías", variant: "destructive" });
       return;
     }
     onComplete();
@@ -66,10 +66,10 @@ const VotingSection = ({
         </div>
         <div>
           <h2 className="text-2xl font-display font-semibold">
-            Voting: <span className="text-accent">{currentVoter}</span>
+            Votando: <span className="text-accent">{currentVoter}</span>
           </h2>
           <p className="text-sm text-muted-foreground">
-            Category {currentCategoryIndex + 1} of {categories.length}
+            Categoría {currentCategoryIndex + 1} de {categories.length}
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@ const VotingSection = ({
       {/* Current category */}
       <div className="text-center mb-8">
         <h3 className="text-3xl font-display font-bold text-accent mb-2">{currentCategory}</h3>
-        <p className="text-muted-foreground">Who deserves this award?</p>
+        <p className="text-muted-foreground">¿Quién merece este premio?</p>
       </div>
 
       {/* Candidates */}
@@ -130,7 +130,7 @@ const VotingSection = ({
           className="gap-2"
         >
           <ChevronLeft className="w-4 h-4" />
-          Previous
+          Anterior
         </Button>
 
         {currentCategoryIndex === categories.length - 1 ? (
@@ -140,11 +140,11 @@ const VotingSection = ({
             className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
           >
             <Check className="w-4 h-4" />
-            Finish Voting
+            Terminar Votación
           </Button>
         ) : (
           <Button onClick={goToNext} className="gap-2">
-            Next
+            Siguiente
             <ChevronRight className="w-4 h-4" />
           </Button>
         )}

@@ -16,21 +16,21 @@ const ParticipantsSection = ({ participants, setParticipants, isLocked }: Partic
   const addParticipant = () => {
     const trimmed = newParticipant.trim();
     if (!trimmed) {
-      toast({ title: "Please enter a name", variant: "destructive" });
+      toast({ title: "Por favor ingresa un nombre", variant: "destructive" });
       return;
     }
     if (participants.includes(trimmed)) {
-      toast({ title: "This person is already added", variant: "destructive" });
+      toast({ title: "Esta persona ya fue agregada", variant: "destructive" });
       return;
     }
     setParticipants([...participants, trimmed]);
     setNewParticipant("");
-    toast({ title: `${trimmed} joined the party! 🎄` });
+    toast({ title: `¡${trimmed} se unió a la fiesta! 🎄` });
   };
 
   const removeParticipant = (name: string) => {
     setParticipants(participants.filter((p) => p !== name));
-    toast({ title: `${name} left the party` });
+    toast({ title: `${name} dejó la fiesta` });
   };
 
   return (
@@ -40,15 +40,15 @@ const ParticipantsSection = ({ participants, setParticipants, isLocked }: Partic
           <Users className="w-6 h-6 text-secondary-foreground" />
         </div>
         <div>
-          <h2 className="text-2xl font-display font-semibold">Participants</h2>
-          <p className="text-sm text-muted-foreground">Add everyone who will vote and be voted for</p>
+          <h2 className="text-2xl font-display font-semibold">Participantes</h2>
+          <p className="text-sm text-muted-foreground">Agrega a todos los que votarán y serán votados</p>
         </div>
       </div>
 
       {!isLocked && (
         <div className="flex gap-3 mb-6">
           <Input
-            placeholder="Enter participant name..."
+            placeholder="Ingresa el nombre del participante..."
             value={newParticipant}
             onChange={(e) => setNewParticipant(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addParticipant()}
@@ -56,7 +56,7 @@ const ParticipantsSection = ({ participants, setParticipants, isLocked }: Partic
           />
           <Button onClick={addParticipant} className="gap-2">
             <UserPlus className="w-4 h-4" />
-            Add
+            Agregar
           </Button>
         </div>
       )}
@@ -79,7 +79,7 @@ const ParticipantsSection = ({ participants, setParticipants, isLocked }: Partic
           </div>
         ))}
         {participants.length === 0 && (
-          <p className="text-muted-foreground text-sm italic">No participants yet. Add some festive folks!</p>
+          <p className="text-muted-foreground text-sm italic">No hay participantes aún. ¡Agrega a tus invitados!</p>
         )}
       </div>
     </section>

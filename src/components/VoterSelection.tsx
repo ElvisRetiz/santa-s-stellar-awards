@@ -7,6 +7,8 @@ interface VoterSelectionProps {
 }
 
 const VoterSelection = ({ participants, votedParticipants, onSelectVoter }: VoterSelectionProps) => {
+  const allVoted = votedParticipants.length === participants.length;
+  
   return (
     <section className="glass rounded-2xl p-6 md:p-8">
       <div className="flex items-center gap-3 mb-6">
@@ -14,8 +16,8 @@ const VoterSelection = ({ participants, votedParticipants, onSelectVoter }: Vote
           <User className="w-6 h-6 text-primary-foreground" />
         </div>
         <div>
-          <h2 className="text-2xl font-display font-semibold">Who's Voting?</h2>
-          <p className="text-sm text-muted-foreground">Select your name to cast your votes</p>
+          <h2 className="text-2xl font-display font-semibold">¿Quién está votando?</h2>
+          <p className="text-sm text-muted-foreground">Selecciona tu nombre para emitir tus votos</p>
         </div>
       </div>
 
@@ -37,14 +39,18 @@ const VoterSelection = ({ participants, votedParticipants, onSelectVoter }: Vote
                 <CheckCircle2 className="absolute top-2 right-2 w-5 h-5 text-secondary" />
               )}
               <span className="font-medium">{participant}</span>
-              {hasVoted && <p className="text-xs text-muted-foreground mt-1">Already voted</p>}
+              {hasVoted && <p className="text-xs text-muted-foreground mt-1">Ya votó</p>}
             </button>
           );
         })}
       </div>
 
       <div className="mt-6 text-center text-sm text-muted-foreground">
-        {votedParticipants.length} of {participants.length} have voted
+        {allVoted ? (
+          <span className="text-accent font-medium">¡Todos han votado! Puedes ver los resultados.</span>
+        ) : (
+          <span>{votedParticipants.length} de {participants.length} han votado</span>
+        )}
       </div>
     </section>
   );
