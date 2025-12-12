@@ -11,11 +11,11 @@ interface CategoriesSectionProps {
 }
 
 const suggestedCategories = [
-  "Best Christmas Sweater",
-  "Most Festive Spirit",
-  "Best Gift Giver",
-  "Holiday Cheer Champion",
-  "Best Holiday Cook",
+  "Mejor Suéter Navideño",
+  "Espíritu Más Festivo",
+  "Mejor Dando Regalos",
+  "Campeón de Alegría Navideña",
+  "Mejor Cocinero Navideño",
 ];
 
 const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSectionProps) => {
@@ -24,21 +24,21 @@ const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSe
   const addCategory = (category?: string) => {
     const toAdd = (category || newCategory).trim();
     if (!toAdd) {
-      toast({ title: "Please enter a category name", variant: "destructive" });
+      toast({ title: "Por favor ingresa el nombre de la categoría", variant: "destructive" });
       return;
     }
     if (categories.includes(toAdd)) {
-      toast({ title: "This category already exists", variant: "destructive" });
+      toast({ title: "Esta categoría ya existe", variant: "destructive" });
       return;
     }
     setCategories([...categories, toAdd]);
     setNewCategory("");
-    toast({ title: `Category "${toAdd}" added! 🏆` });
+    toast({ title: `¡Categoría "${toAdd}" agregada! 🏆` });
   };
 
   const removeCategory = (category: string) => {
     setCategories(categories.filter((c) => c !== category));
-    toast({ title: `Category "${category}" removed` });
+    toast({ title: `Categoría "${category}" eliminada` });
   };
 
   return (
@@ -48,8 +48,8 @@ const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSe
           <Trophy className="w-6 h-6 text-accent-foreground" />
         </div>
         <div>
-          <h2 className="text-2xl font-display font-semibold">Award Categories</h2>
-          <p className="text-sm text-muted-foreground">Create categories for the Christmas awards</p>
+          <h2 className="text-2xl font-display font-semibold">Categorías de Premios</h2>
+          <p className="text-sm text-muted-foreground">Crea las categorías para los premios navideños</p>
         </div>
       </div>
 
@@ -57,7 +57,7 @@ const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSe
         <>
           <div className="flex gap-3 mb-4">
             <Input
-              placeholder="Enter category name..."
+              placeholder="Ingresa el nombre de la categoría..."
               value={newCategory}
               onChange={(e) => setNewCategory(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addCategory()}
@@ -65,12 +65,12 @@ const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSe
             />
             <Button onClick={() => addCategory()} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
               <Plus className="w-4 h-4" />
-              Add
+              Agregar
             </Button>
           </div>
 
           <div className="mb-6">
-            <p className="text-xs text-muted-foreground mb-2">Quick add suggestions:</p>
+            <p className="text-xs text-muted-foreground mb-2">Sugerencias rápidas:</p>
             <div className="flex flex-wrap gap-2">
               {suggestedCategories
                 .filter((s) => !categories.includes(s))
@@ -113,7 +113,7 @@ const CategoriesSection = ({ categories, setCategories, isLocked }: CategoriesSe
         ))}
         {categories.length === 0 && (
           <p className="text-muted-foreground text-sm italic text-center py-4">
-            No categories yet. Add some award categories!
+            No hay categorías aún. ¡Agrega algunas categorías de premios!
           </p>
         )}
       </div>

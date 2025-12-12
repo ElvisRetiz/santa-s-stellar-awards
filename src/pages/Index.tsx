@@ -20,17 +20,19 @@ const Index = () => {
   const [votes, setVotes] = useState<Record<string, Record<string, string>>>({});
   const [votedParticipants, setVotedParticipants] = useState<string[]>([]);
 
+  const allHaveVoted = participants.length > 0 && votedParticipants.length === participants.length;
+
   const startVoting = () => {
     if (participants.length < 2) {
-      toast({ title: "Add at least 2 participants", variant: "destructive" });
+      toast({ title: "Agrega al menos 2 participantes", variant: "destructive" });
       return;
     }
     if (categories.length < 1) {
-      toast({ title: "Add at least 1 category", variant: "destructive" });
+      toast({ title: "Agrega al menos 1 categoría", variant: "destructive" });
       return;
     }
     setPhase("voting");
-    toast({ title: "Let the voting begin! 🎄" });
+    toast({ title: "¡Que comience la votación! 🎄" });
   };
 
   const selectVoter = (voter: string) => {
@@ -39,19 +41,25 @@ const Index = () => {
 
   const completeVoting = () => {
     if (currentVoter) {
-      setVotedParticipants((prev) => [...prev, currentVoter]);
+      const newVotedParticipants = [...votedParticipants, currentVoter];
+      setVotedParticipants(newVotedParticipants);
       setCurrentVoter(null);
-      toast({ title: "Votes submitted! ✨" });
+      
+      if (newVotedParticipants.length === participants.length) {
+        toast({ title: "¡Todos han votado! Ya puedes ver los resultados ✨" });
+      } else {
+        toast({ title: "¡Votos registrados! ✨" });
+      }
     }
   };
 
   const showResults = () => {
-    if (votedParticipants.length === 0) {
-      toast({ title: "At least one person must vote first", variant: "destructive" });
+    if (!allHaveVoted) {
+      toast({ title: "Todos deben votar antes de ver los resultados", variant: "destructive" });
       return;
     }
     setPhase("results");
-    toast({ title: "Drumroll please... 🥁" });
+    toast({ title: "¡Redoble de tambores! 🥁" });
   };
 
   const resetAll = () => {
@@ -61,7 +69,7 @@ const Index = () => {
     setCurrentVoter(null);
     setVotes({});
     setVotedParticipants([]);
-    toast({ title: "Starting fresh! 🎄" });
+    toast({ title: "¡Empezando de nuevo! 🎄" });
   };
 
   return (
@@ -92,7 +100,7 @@ const Index = () => {
                 className="gap-3 text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg"
               >
                 <Play className="w-5 h-5" />
-                Start Voting
+                Iniciar Votación
               </Button>
             </div>
           </div>
@@ -108,17 +116,18 @@ const Index = () => {
                   onSelectVoter={selectVoter}
                 />
                 
-                <div className="flex justify-center gap-4 pt-6">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={showResults}
-                    className="gap-3"
-                  >
-                    <BarChart3 className="w-5 h-5" />
-                    Show Results
-                  </Button>
-                </div>
+                {allHaveVoted && (
+                  <div className="flex justify-center gap-4 pt-6">
+                    <Button
+                      size="lg"
+                      onClick={showResults}
+                      className="gap-3 bg-accent text-accent-foreground hover:bg-accent/90"
+                    >
+                      <BarChart3 className="w-5 h-5" />
+                      Ver Resultados
+                    </Button>
+                  </div>
+                )}
               </>
             ) : (
               <VotingSection
@@ -149,7 +158,7 @@ const Index = () => {
                 className="gap-3"
               >
                 <RotateCcw className="w-5 h-5" />
-                Start New Awards
+                Nuevos Premios
               </Button>
             </div>
           </div>

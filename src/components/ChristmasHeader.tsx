@@ -10,13 +10,13 @@ const ChristmasHeader = () => {
       </div>
       
       <h1 className="text-5xl md:text-7xl font-display font-bold mb-4">
-        <span className="text-primary">Christmas</span>{" "}
-        <span className="animate-shimmer text-transparent">Awards</span>
+        <span className="text-primary">Premios</span>{" "}
+        <span className="animate-shimmer text-transparent">Navideños</span>
       </h1>
       
       <p className="text-lg text-muted-foreground flex items-center justify-center gap-2">
         <Sparkles className="w-5 h-5 text-accent" />
-        Vote for the most festive among us
+        Vota por los más festivos entre nosotros
         <Sparkles className="w-5 h-5 text-accent" />
       </p>
     </header>
